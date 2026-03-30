@@ -15,6 +15,12 @@ services:
     networks:
       - inception
     restart: on-failure
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb -u root --password=$(cat /run/secrets/db_root_password) -e 'SELECT 1'"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
   
   wordpress:
     build:
@@ -34,7 +40,8 @@ services:
       - inception
     restart: on-failure
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
 
 
 secrets:

@@ -40,5 +40,8 @@ if [ ! -f  "${WP_PATH}/wp-config.php" ]; then
 	
 fi
 
+sed -i 's|listen = /run/php/.*|listen = 0.0.0.0:9000|' \
+    /etc/php/*/fpm/pool.d/www.conf
+
 PHP_FPM_VERSION=$(find /usr/sbin -name "php-fpm*" | head -1)
 exec "${PHP_FPM_VERSION}" -F
