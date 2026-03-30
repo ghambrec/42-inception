@@ -15,6 +15,26 @@ services:
     networks:
       - inception
     restart: on-failure
+  
+  wordpress:
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+    container_name: wordpress
+    image: wordpress
+    env_file:
+      - .env
+    secrets:
+      - db_user_password
+      - wp_user_password
+      - wp_admin_password
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - inception
+    restart: on-failure
+    depends_on:
+      - mariadb
 
 
 secrets:
@@ -22,6 +42,10 @@ secrets:
     file: ../secrets/db_user_password.txt
   db_root_password:
     file: ../secrets/db_root_password.txt
+  wp_user_password:
+    file: ../secrets/wp_user_password.txt
+  wp_admin_password:
+    file: ../secrets/wp_admin_password.txt
 
 volumes:
   db:
@@ -30,6 +54,12 @@ volumes:
       type: none
       o: bind
       device: /home/${USER}/data/db
+  wordpress:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/${USER}/data/wordpress
 
 networks:
   inception:
