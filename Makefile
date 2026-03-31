@@ -11,6 +11,7 @@ secrets:
 		openssl rand -hex 16 > secrets/db_root_password.txt; \
 		openssl rand -hex 16 > secrets/wp_admin_password.txt; \
 		openssl rand -hex 16 > secrets/wp_user_password.txt; \
+		openssl rand -hex 16 > secrets/ftp_user_password.txt; \
 	fi
 
 up: secrets
