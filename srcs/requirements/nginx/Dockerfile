@@ -2,10 +2,10 @@ FROM debian:bookworm
 
 RUN apt-get update && \
 	apt-get install -y --no-install-recommends \
-	nginx \
-	openssl \
-	gettext-base && \
-	rm -rf /var/lib/apt/lists/*
+		nginx \
+		openssl \
+		gettext-base \
+	&& rm -rf /var/lib/apt/lists/*
 
 
 RUN openssl req -x509 -nodes -days 365 \
