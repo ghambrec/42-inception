@@ -42,7 +42,24 @@ services:
     depends_on:
       mariadb:
         condition: service_healthy
-
+  
+  nginx:
+    build:
+      context: ./requirements/nginx
+      dockerfile: Dockerfile
+    container_name: nginx
+    image: nginx
+    env_file:
+      - .env
+    volumes:
+      - wordpress:/var/www/html
+    ports:
+      - "443:443"
+    networks:
+      - inception
+    restart: on-failure
+    depends_on:
+      - wordpress
 
 secrets:
   db_user_password:
