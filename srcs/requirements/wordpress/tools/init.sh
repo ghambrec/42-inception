@@ -3,7 +3,7 @@ set -e
 
 DB_USER_PASSWORD=$(cat /run/secrets/db_user_password)
 WP_ADMIN_PASSWORD=$(cat /run/secrets/wp_admin_password)
-WP_USER_PASSWORD=$(cat /run/secrets/wp_admin_password)
+WP_USER_PASSWORD=$(cat /run/secrets/wp_user_password)
 
 WP_PATH="/var/www/html"
 mkdir -p "${WP_PATH}"
@@ -37,6 +37,12 @@ if [ ! -f  "${WP_PATH}/wp-config.php" ]; then
 		--role=author \
 		--user_pass="${WP_USER_PASSWORD}" \
 		--allow-root
+
+	# redis
+	wp config set WP_REDIS_HOST "redis" --path="${WP_PATH}" --allow-root
+	wp config set WP_REDIS_PORT "6379" --path="${WP_PATH}" --allow-root
+	wp plugin install redis-cache --activate --path="${WP_PATH}" --allow-root
+	wp redis enable --path="${WP_PATH}" --allow-root
 	
 fi
 
