@@ -5,6 +5,8 @@ RUN apt-get update && \
 		pure-ftpd  \
 	&& rm -rf /var/lib/apt/lists/*
 
+COPY conf/pure-ftpd.conf /etc/pure-ftpd/pure-ftpd.conf
+
 COPY tools/init.sh /usr/local/bin/init.sh
 RUN chmod +x /usr/local/bin/init.sh
 

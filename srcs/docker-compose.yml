@@ -84,13 +84,14 @@ services:
     secrets:
       - ftp_user_password
     volumes:
-      - wordpress:/home/ftpusers
+      - wordpress:/home/wordpress
     networks:
       - inception
     ports:
       - "21:21"
       - "30000-30009:30000-30009"
     restart: on-failure
+    privileged: true
 
 secrets:
   db_user_password:
@@ -102,7 +103,7 @@ secrets:
   wp_admin_password:
     file: ../secrets/wp_admin_password.txt
   ftp_user_password:
-    file: ../secrets/wp_admin_password.txt
+    file: ../secrets/ftp_user_password.txt
 
 volumes:
   db:
