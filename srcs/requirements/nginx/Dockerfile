@@ -20,6 +20,9 @@ COPY conf/nginx.conf /etc/nginx/templates/nginx.conf
 COPY tools/init.sh /usr/local/bin/init.sh
 RUN chmod +x /usr/local/bin/init.sh
 
+# BONUS (static website)
+COPY mywebsite/index.html /var/www/html/mywebsite/index.html
+
 EXPOSE 443
 
 ENTRYPOINT ["init.sh"]
