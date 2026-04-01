@@ -92,6 +92,8 @@ services:
       - "30000-30009:30000-30009"
     restart: on-failure
     privileged: true
+    depends_on:
+      - wordpress
 
 secrets:
   db_user_password:

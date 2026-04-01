@@ -46,6 +46,10 @@ if [ ! -f  "${WP_PATH}/wp-config.php" ]; then
 	
 fi
 
+chown -R www-data:www-data "${WP_PATH}"
+chmod -R 755 "${WP_PATH}"
+chmod -R 775 "${WP_PATH}/wp-content"
+
 sed -i 's|listen = /run/php/.*|listen = 0.0.0.0:9000|' \
     /etc/php/*/fpm/pool.d/www.conf
 
