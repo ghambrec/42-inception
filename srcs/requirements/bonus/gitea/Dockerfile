@@ -5,6 +5,7 @@ RUN apt-get update && \
 		wget \
 		curl \
 		git \
+		gosu \
 	&& rm -rf /var/lib/apt/lists/*
 
 RUN wget -q -O /usr/local/bin/gitea \
