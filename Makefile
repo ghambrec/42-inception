@@ -12,11 +12,14 @@ secrets:
 		openssl rand -hex 16 > secrets/wp_admin_password.txt; \
 		openssl rand -hex 16 > secrets/wp_user_password.txt; \
 		openssl rand -hex 16 > secrets/ftp_user_password.txt; \
+		openssl rand -hex 16 > secrets/gitea_admin_password.txt; \
 	fi
 
 up: secrets
 	mkdir -p $(DATA_DIR)/db
 	mkdir -p $(DATA_DIR)/wordpress
+	mkdir -p $(DATA_DIR)/gitea
+	mkdir -p $(DATA_DIR)/gitea_config
 	docker compose -f $(COMPOSE_FILE) up -d --build
 
 down:

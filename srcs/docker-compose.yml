@@ -110,6 +110,25 @@ services:
       mariadb:
         condition: service_healthy
 
+  gitea:
+    build:
+      context: ./requirements/bonus/gitea
+      dockerfile: Dockerfile
+    container_name: gitea
+    image: gitea
+    env_file:
+      - .env
+    secrets:
+      - gitea_admin_password
+    volumes:
+      - gitea:/var/lib/gitea
+      - gitea_config:/etc/gitea
+    networks:
+      - inception
+    ports:
+      - "3000:3000"
+    restart: on-failure
+
 secrets:
   db_user_password:
     file: ../secrets/db_user_password.txt
@@ -121,6 +140,8 @@ secrets:
     file: ../secrets/wp_admin_password.txt
   ftp_user_password:
     file: ../secrets/ftp_user_password.txt
+  gitea_admin_password:
+    file: ../secrets/gitea_admin_password.txt
 
 volumes:
   db:
@@ -135,6 +156,18 @@ volumes:
       type: none
       o: bind
       device: /home/${USER}/data/wordpress
+  gitea:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/${USER}/data/gitea
+  gitea_config:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/${USER}/data/gitea_config
 
 networks:
   inception:
